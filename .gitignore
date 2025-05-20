@@ -1,0 +1,40 @@
+# ОС
+.DS_Store
+Thumbs.db
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Сборка / Кеш / Логи
+dist/
+build/
+.cache/
+.vite/
+*.log
+
+# IDE и редакторы
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# окружения
+.env
+.env.local
+.env.*.local
+
+# тесты и покрытия
+coverage/
+
+# временные файлы
+*.tmp
+*.swp
+*.bak
+*.orig
+
+# файлы системы
+*.DS_Store
