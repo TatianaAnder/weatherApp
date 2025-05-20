@@ -1,16 +1,51 @@
 const apiKey = 'a714cdf4e4e47d4770a31d991fbe1ab6';
-const apiUrl = 'https://api.openweathermap.org/data/2.5/weather?units=metric&q=tbilisi';
+const apiUrl = 'https://api.openweathermap.org/data/2.5/weather?units=metric&q=';
 
-async function checkWeather() {
-    const response = await fetch(apiUrl + `&appid=${apiKey}`);
-    let data = await response.json();
+const searchBox = document.querySelector('.search input');
+const searchBtn = document.querySelector('.search button');
+const weatherIcon = document.querySelector('.weather-icon');
 
-    console.log(data);
+async function checkWeather(city) {
+    const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
 
-    document.querySelector('.city').innerHTML = data.name;
-    document.querySelector('.temperature').innerHTML = Math.round(data.main.temp) + '°C';
-    document.querySelector('.humidity').innerHTML = data.main.humidity + '%';
-    document.querySelector('.wind').innerHTML = data.wind.speed + 'km/h';
+    if(response.status == 404){
+        document.querySelector('.error').style.display = 'block';
+        document.querySelector('.weather').style.display = 'none';
+    }else{
+        let data = await response.json();
+
+        console.log(data);
+
+        document.querySelector('.city').innerHTML = data.name;
+        document.querySelector('.temperature').innerHTML = Math.round(data.main.temp) + '°C';
+        document.querySelector('.humidity').innerHTML = data.main.humidity + '%';
+        document.querySelector('.wind').innerHTML = data.wind.speed + 'km/h';
+
+        if(data.weather[0].main == 'Clear'){
+            weatherIcon.src = 'images/Clear.png';
+        }
+        else if(data.weather[0].main == 'Rain'){
+            weatherIcon.src = 'images/rain.png';
+        }
+        else if(data.weather[0].main == 'Clouds'){
+            weatherIcon.src = 'images/cloudy.png';
+        }
+        else if(data.weather[0].main == 'Drizzle'){
+            weatherIcon.src = 'images/drixxle.png';
+        }
+        else if(data.weather[0].main == 'Snow'){
+            weatherIcon.src = 'images/snow.png';
+        }
+        
+        document.querySelector('.weather').style.display = 'block';
+        document.querySelector('.error').style.display = 'none';
+
+    }
 }
-checkWeather();
+
+searchBtn.addEventListener('click', ()=> {
+    checkWeather(searchBox.value);
+})
+
+checkWeather('Tbilisi');
 
